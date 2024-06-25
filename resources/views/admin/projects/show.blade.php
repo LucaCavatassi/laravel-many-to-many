@@ -13,12 +13,16 @@
         <hr>
         <div class="d-flex gap-5">
             <div>
-                <h4 class="fw-bold text-primary mt-3">Linguaggio/Framework</h4>
+                <h4 class="fw-bold text-primary mt-3">Campo</h4>
                 <p>{{ $project->type?->name }}</p>
             </div>
             <div>
-                <h4 class="fw-bold text-primary mt-3">Campo Di Lavoro</h4>
-                <p>{{ $project->type?->field }}</p>
+                <h4 class="fw-bold text-primary mt-3">Tecnologia Utilizzata</h4>
+                @forelse ($project->technologies as $technology)                               
+                    <td>{{ $technology->name }}</td>
+                @empty
+                    <td>Nessuna tecnologia indicata</td>
+                @endforelse
             </div>
         </div>
         <h6 class="fw-bold text-primary mt-3">Slug ID</h6>
