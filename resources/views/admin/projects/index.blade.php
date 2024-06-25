@@ -29,6 +29,16 @@
                 </div>
             @endif
 
+            <form action="{{ route("admin.projects.index") }}" method="GET">
+                @csrf
+                <label for="per_page">Quanti elementi per pagina vuoi vedere?</label>
+                <select name="per_page" id="per_page">
+                    <option value="5" @selected($projects->perPage()== 5)>5</option>
+                    <option value="10" @selected($projects->perPage()== 10)>10</option>
+                    <option value="15" @selected($projects->perPage()== 15)>15</option>
+                </select>
+                <button type="submit">Applica</button>
+            </form>
             <table class="table table-striped table-hove ms-body" >
                 <thead>
                     <tr>
@@ -60,7 +70,9 @@
                 </tbody>
             </table>
 
-            
+            <div>
+                {{ $projects->links() }}
+            </div>
             
             <!-- Modale Eliminazione -->
             <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
