@@ -40,6 +40,19 @@
                     </select>
                 </div>
             </form>
+
+            <form action="{{ route("admin.projects.index") }}" method="GET">
+                @csrf
+                <div class="d-flex align-items-center gap-4">
+                    <label for="per_language">Filtra per linguaggio</label>
+                    <select class="form-select" name="per_language" id="per_language" onchange="this.form.submit()">
+                            @foreach ($technologies as $technology)
+                                <option value="{{ $technology->id  }}">{{$technology->name}}</option>
+                            @endforeach
+                    </select>
+                </div>
+            </form>
+
             <table class="table table-striped table-hove ms-body" >
                 <thead>
                     <tr>
@@ -52,7 +65,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($projects as $project)
+                    @forelse ($projects as $project)
                         <tr>
                             <th scope="row">{{ $project->id }}</th>
                             <td><a href="{{ route("admin.projects.show", ["project" => $project->slug]) }}">{{ $project->title }}</a></td>
@@ -69,7 +82,37 @@
                             {{-- <td><a class="btn btn-primary" href="{{ route ("admin.projects.edit", ["project" => $project->slug])}}">Modifica</a></td> --}}
                             <td><button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Elimina</button></td>
                         </tr>
-                    @endforeach
+
+
+                        <!-- Modale Eliminazione -->
+                        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    {{-- HEADEAR --}}
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="deleteModal">Conferma eliminazione</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    {{-- BODY --}}
+                                    <div class="modal-body">
+                                        <span>Vuoi davvero eliminare l'elemento definitivamente?</span>
+                                    </div>
+                                    {{-- FOOTER --}}
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Chiudi</button>
+                                        {{-- DESTROY --}}
+                                        <form action="{{ route ("admin.projects.destroy", ["project" => $project->id])}}" method="POST" >
+                                            @method("DELETE")
+                                            @csrf
+                                            <button class="btn btn-danger">Elimina definitivamente</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @empty
+                        Nessun progetto trovato.
+                    @endforelse
                 </tbody>
             </table>
 
@@ -77,31 +120,6 @@
                 {{ $projects->links() }}
             </div>
             
-            <!-- Modale Eliminazione -->
-            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        {{-- HEADEAR --}}
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Conferma eliminazione</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        {{-- BODY --}}
-                        <div class="modal-body">
-                            <span>Vuoi davvero eliminare l'elemento definitivamente?</span>
-                        </div>
-                        {{-- FOOTER --}}
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Chiudi</button>
-                            {{-- DESTROY --}}
-                            <form action="{{ route ("admin.projects.destroy", ["project" => $project->id])}}" method="POST" >
-                                @method("DELETE")
-                                @csrf
-                                <button class="btn btn-danger">Elimina definitivamente</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </div>
 @endsection

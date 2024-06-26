@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
 use App\Models\Technology;
 use App\Models\Type;
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -19,8 +20,17 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->per_page ? $request->per_page : 10;
-        $projects = Project::paginate($perPage)->appends(["per_page" => $perPage]);
-        return view("admin.projects.index" , compact("projects"));
+        $perLanguage = $request->per_language ? $request->per_language : null;
+        $projects = Project::with('technologies')
+            ->whereHas('technologies', function ($query) use ($perLanguage) {
+            $query->where('technology_id', $perLanguage);
+            })
+            ->paginate($perPage)
+            ->appends(["per_page" => $perPage]);
+        $technologies = Technology::all();
+        // dd($perLanguage);
+        
+        return view("admin.projects.index" , compact("projects", "technologies"));
     }
 
     /**
@@ -99,6 +109,7 @@ class ProjectController extends Controller
     public function destroy(string $id)
     {
         $project = Project::findOrFail($id);
+        $project->technologies()->detach();
         $project->delete();
         
         return redirect()->route("admin.projects.index")->with("messageDelete", "Il progetto ". $project->title . " è stato eliminato con successo!");

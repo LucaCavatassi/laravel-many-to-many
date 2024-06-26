@@ -25,7 +25,8 @@ class UpdateProjectRequest extends FormRequest
         return [
             "title" => ["required","max:30", Rule::unique("projects", "title")->ignore($this->project)],
             "description" => "max:300",
-            "type_id"=>"required|exists:types,id"
+            "type_id"=>"required|exists:types,id",
+            "technologies"=>"nullable|exists:technologies,id",
         ];
     }
 
@@ -37,7 +38,9 @@ class UpdateProjectRequest extends FormRequest
             "title.unique" => "Il titolo è già in utilizzo, cambia titolo!",
             "description.max" => "La lunghezza massima della descrizione è di 300 caratteri!",
             "type_id.required" => "Il linguaggio è necessario per modificare un nuovo progetto!",
-            "type_id.exists" => "Questo linguaggio non esiste."
+            "type_id.exists" => "Questo linguaggio non esiste.",
+            "technologies.exists"=>"Questa tecnologia non è valida.",
+
         ];
     }
 }
