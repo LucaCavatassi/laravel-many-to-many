@@ -84,6 +84,8 @@ class ProjectController extends Controller
         
         $project->slug = Str::slug($request->title);
         $project->update($data);
+
+        $project->technologies()->sync($request->technologies);
         // dd($project);
         
         // dd($project);
