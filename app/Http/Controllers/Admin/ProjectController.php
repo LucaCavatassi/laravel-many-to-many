@@ -106,7 +106,8 @@ class ProjectController extends Controller
 
     public function editselector (){
         $projects = Project::all();
-
-        return view("admin.projects.editselector", compact("projects"));
+        $types = Type::all();
+        $technologies = Technology::all();
+        return view("admin.projects.editselector", compact("projects", "types","technologies"));
     }
 }

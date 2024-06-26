@@ -3,12 +3,27 @@
 @section('content')
 <div class="container">
     <h1 class="mt-2">Seleziona il progetto che vuoi modificare</h1>
+    <div class="my-3 d-flex justify-content-between align-items-center" >
+        <div>
+            <h6>Clicca per filtrare in base al campo</h6>
+        </div>
+        <div>
+            <span class="badge rounded-pill text-bg-warning">Front-End</span>
+            <span class="badge rounded-pill text-bg-info">Back-End</span>
+            <span class="badge rounded-pill text-bg-success">Full-Stack</span>
+            <span class="badge rounded-pill text-bg-secondary">Non assegnato</span>
+        </div>
+    </div>
+
+
     <ul class="list-group">
         <div class="list-group ms-list">
             @foreach ($projects as $project)
                 <span data-bs-toggle="modal" data-bs-target="#{{ $project->id }}">
-                    <a class="list-group-item list-group-item-action mb-2 py-3" aria-current="true">{{$project->title }}</a>
+                    <a class="list-group-item list-group-item-action mb-2 py-3 {{ $project->type?->name == "Front-End" ? "list-group-item-warning" : ""  }} {{ $project->type?->name == "Back-End" ? "list-group-item-info" : ""  }} {{ $project->type?->name == "Full-Stack" ? "list-group-item-success" : ""  }} {{ $project->type?->name == null ? "list-group-item-secondary" : ""  }}" aria-current="true">{{$project->title }}</a>
                 </span> 
+
+
                 <!-- Modale Eliminazione -->
                 <div class="modal fade" id="{{ $project->id }}" tabindex="-1" aria-labelledby="editModal" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
