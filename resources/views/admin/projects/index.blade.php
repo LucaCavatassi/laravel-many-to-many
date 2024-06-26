@@ -47,7 +47,7 @@
                     <label for="per_language">Filtra per linguaggio</label>
                     <select class="form-select" name="per_language" id="per_language" onchange="this.form.submit()">
                             @foreach ($technologies as $technology)
-                                <option value="{{ $technology->id  }}">{{$technology->name}}</option>
+                                <option value="{{ $technology->id  }}" {{ $perLanguage == $technology->id ? 'selected' : '' }}>{{$technology->name}}</option>
                             @endforeach
                             <option value="all">Tutti</option>
                     </select>
@@ -66,7 +66,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($projects as $project)
+                    @foreach ($projects as $project)
                         <tr>
                             <th scope="row">{{ $project->id }}</th>
                             <td><a href="{{ route("admin.projects.show", ["project" => $project->slug]) }}">{{ $project->title }}</a></td>
@@ -83,7 +83,6 @@
                             {{-- <td><a class="btn btn-primary" href="{{ route ("admin.projects.edit", ["project" => $project->slug])}}">Modifica</a></td> --}}
                             <td><button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Elimina</button></td>
                         </tr>
-
 
                         <!-- Modale Eliminazione -->
                         <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
@@ -111,9 +110,7 @@
                                 </div>
                             </div>
                         </div>
-                    @empty
-                        <span>Nessun progetto trovato.</span>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
 

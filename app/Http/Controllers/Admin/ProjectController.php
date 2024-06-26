@@ -37,7 +37,7 @@ class ProjectController extends Controller
         $technologies = Technology::all();
         // dd($perLanguage);
         
-        return view("admin.projects.index" , compact("projects", "technologies"));
+        return view("admin.projects.index" , compact("projects", "technologies","perLanguage"));
     }
 
     /**
