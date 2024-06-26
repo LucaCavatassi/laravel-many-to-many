@@ -49,6 +49,7 @@
                             @foreach ($technologies as $technology)
                                 <option value="{{ $technology->id  }}">{{$technology->name}}</option>
                             @endforeach
+                            <option value="all">Tutti</option>
                     </select>
                 </div>
             </form>
@@ -111,7 +112,7 @@
                             </div>
                         </div>
                     @empty
-                        Nessun progetto trovato.
+                        <span>Nessun progetto trovato.</span>
                     @endforelse
                 </tbody>
             </table>

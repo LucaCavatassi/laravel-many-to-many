@@ -21,12 +21,19 @@ class ProjectController extends Controller
     {
         $perPage = $request->per_page ? $request->per_page : 10;
         $perLanguage = $request->per_language ? $request->per_language : null;
-        $projects = Project::with('technologies')
-            ->whereHas('technologies', function ($query) use ($perLanguage) {
-            $query->where('technology_id', $perLanguage);
-            })
-            ->paginate($perPage)
-            ->appends(["per_page" => $perPage]);
+        // dd($perLanguage);
+        // $projects = Project::all();
+        
+        if ($perLanguage === null or $perLanguage === "all") {
+            $projects = Project::paginate($perPage)->appends(["per_page" => $perPage]);
+        } else {
+            $projects = Project::with('technologies')
+                ->whereHas('technologies', function ($query) use ($perLanguage) {
+                $query->where('technology_id', $perLanguage);
+                })
+                ->paginate($perPage)
+                ->appends(["per_page" => $perPage]);
+        }
         $technologies = Technology::all();
         // dd($perLanguage);
         
