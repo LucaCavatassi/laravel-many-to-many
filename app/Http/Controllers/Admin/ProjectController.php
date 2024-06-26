@@ -38,14 +38,16 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
-        dd($request);
         $data = $request->validated();
         $newProject = new Project();
         $newProject->fill($data);
         $newProject->slug = Str::slug($newProject->title);
-        // dd($newProject);
-
+        // dd($newProject->technologies());
         $newProject->save();
+    
+        if ($request->has("technologies")){
+            $newProject->technologies()->attach($request->technologies);
+        }
 
         return redirect()->route("admin.projects.index")->with("messageUpload", "Il progetto ". $newProject->title . " è stato aggiunto con successo!");;   
     }
