@@ -8,10 +8,12 @@
             <h6>Clicca per filtrare in base al campo</h6>
         </div>
         <div>
-            <span class="badge rounded-pill text-bg-warning">Front-End</span>
-            <span class="badge rounded-pill text-bg-info">Back-End</span>
-            <span class="badge rounded-pill text-bg-success">Full-Stack</span>
-            <span class="badge rounded-pill text-bg-secondary">Non assegnato</span>
+            <span id="front_end" class="badge rounded-pill text-bg-warning">Front-End</span>
+            <span id="back_end"class="badge rounded-pill text-bg-info">Back-End</span>
+            <span id="full_stack"class="badge rounded-pill text-bg-success">Full-Stack</span>
+            <span id="null"class="badge rounded-pill text-bg-secondary">Non Assegnato</span>
+            <span id="all"class="badge rounded-pill text-bg-primary">Mostra Tutti</span>
+
         </div>
     </div>
 
@@ -20,7 +22,7 @@
         <div class="list-group ms-list">
             @foreach ($projects as $project)
                 <span data-bs-toggle="modal" data-bs-target="#{{ $project->id }}">
-                    <a class="list-group-item list-group-item-action mb-2 py-3 {{ $project->type?->name == "Front-End" ? "list-group-item-warning" : ""  }} {{ $project->type?->name == "Back-End" ? "list-group-item-info" : ""  }} {{ $project->type?->name == "Full-Stack" ? "list-group-item-success" : ""  }} {{ $project->type?->name == null ? "list-group-item-secondary" : ""  }}" aria-current="true">{{$project->title }}</a>
+                    <a class="ms-item list-group-item list-group-item-action mb-2 py-3 {{ $project->type?->name == "Front-End" ? "list-group-item-warning" : ""  }} {{ $project->type?->name == "Back-End" ? "list-group-item-info" : ""  }} {{ $project->type?->name == "Full-Stack" ? "list-group-item-success" : ""  }} {{ $project->type?->name == null ? "list-group-item-secondary" : ""  }}" aria-current="true">{{$project->title }}</a>
                 </span> 
 
 
