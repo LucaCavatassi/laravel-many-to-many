@@ -38,6 +38,7 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
+        dd($request);
         $data = $request->validated();
         $newProject = new Project();
         $newProject->fill($data);

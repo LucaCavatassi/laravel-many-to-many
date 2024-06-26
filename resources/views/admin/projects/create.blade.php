@@ -40,13 +40,13 @@
                         </div>
 
                         <div class="d-flex flex-column">
-                            <label class="mt-1 mb-2" for="type">Seleziona un linguaggio</label>
-                            <select class="fs-6 p-1" name="type_id" id="type">
-                                <option disabled="disabled" selected="selected">Seleziona un linguaggio</option>
+                            <span class="mt-1 mb-2">Seleziona un linguaggio</span>
+                            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
                                 @foreach ($technologies as $technology)
-                                    <option value="{{$technology->id}}">{{ $technology->name }}</option>
+                                    <input type="checkbox" class="btn-check" id="technology - {{ $technology->id }}" value="{{$technology->id}}" name="technologies[]">
+                                    <label class="btn btn-outline-primary" for="technology - {{ $technology->id }}">{{ $technology->name }}</label>
                                 @endforeach
-                            </select>
+                            </div>
                         </div>
                     </div>
                 </div>
