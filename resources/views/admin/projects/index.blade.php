@@ -31,13 +31,14 @@
 
             <form action="{{ route("admin.projects.index") }}" method="GET">
                 @csrf
-                <label for="per_page">Quanti elementi per pagina vuoi vedere?</label>
-                <select name="per_page" id="per_page">
-                    <option value="5" @selected($projects->perPage()== 5)>5</option>
-                    <option value="10" @selected($projects->perPage()== 10)>10</option>
-                    <option value="15" @selected($projects->perPage()== 15)>15</option>
-                </select>
-                <button type="submit">Applica</button>
+                <div class="d-flex align-items-center gap-4">
+                    <label for="per_page">Quanti elementi per pagina vuoi vedere?</label>
+                    <select class="form-select" name="per_page" id="per_page" onchange="this.form.submit()">
+                        <option value="5" @selected($projects->perPage()== 5)>5</option>
+                        <option value="10" @selected($projects->perPage()== 10)>10</option>
+                        <option value="15" @selected($projects->perPage()== 15)>15</option>
+                    </select>
+                </div>
             </form>
             <table class="table table-striped table-hove ms-body" >
                 <thead>
@@ -46,6 +47,8 @@
                         <th scope="col">Titolo</th>
                         <th scope="col">Descrizione</th>
                         <th scope="col">Campo</th>
+                        <th scope="col">Linguaggio</th>
+
                     </tr>
                 </thead>
                 <tbody>
