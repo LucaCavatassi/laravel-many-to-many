@@ -42,8 +42,13 @@
                         <span class="mt-1 mb-2">Seleziona un linguaggio</span>
                         <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
                             @foreach ($technologies as $technology)
-                                <input @checked($project->technologies->contains($technology)) type="checkbox" class="btn-check" id="technology - {{ $technology->id }}" value="{{$technology->id}}" name="technologies[]">
-                                <label class="btn btn-outline-primary" for="technology - {{ $technology->id }}">{{ $technology->name }}</label>
+                                @if (old("technologies") !== null)
+                                    <input @checked(in_array($technology->id, old("technologies", []))) type="checkbox" class="btn-check" id="technology - {{ $technology->id }}" value="{{$technology->id}}" name="technologies[]">
+                                    <label class="btn btn-outline-primary" for="technology - {{ $technology->id }}">{{ $technology->name }}</label>
+                                @else
+                                    <input @checked($project->technologies->contains($technology)) type="checkbox" class="btn-check" id="technology - {{ $technology->id }}" value="{{$technology->id}}" name="technologies[]">
+                                    <label class="btn btn-outline-primary" for="technology - {{ $technology->id }}">{{ $technology->name }}</label>    
+                                @endif
                             @endforeach
                         </div>
                     </div>
