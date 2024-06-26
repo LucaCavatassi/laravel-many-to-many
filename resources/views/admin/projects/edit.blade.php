@@ -37,6 +37,16 @@
                             <option @selected(old("type_id", $project->type?->id) == $type->id ? "selected" : "") value="{{$type->id}}">{{ $type->name }}</option>
                         @endforeach
                     </select>
+
+                    <div class="d-flex flex-column">
+                        <span class="mt-1 mb-2">Seleziona un linguaggio</span>
+                        <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                            @foreach ($technologies as $technology)
+                                <input @checked($project->technologies->contains($technology)) type="checkbox" class="btn-check" id="technology - {{ $technology->id }}" value="{{$technology->id}}" name="technologies[]">
+                                <label class="btn btn-outline-primary" for="technology - {{ $technology->id }}">{{ $technology->name }}</label>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Invia</button>
                 
